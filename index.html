@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tracker — Protótipo do Aluno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">TRACKER</div>
+
+    <nav class="flow-nav" aria-label="Etapas do protótipo">
+      <button class="flow-link is-active" data-screen="login">01 · Login</button>
+      <button class="flow-link" data-screen="prof-cards" disabled>02 · Prof · Cards</button>
+      <button class="flow-link" data-screen="task-editar" disabled>03 · Task · Editar</button>
+      <button class="flow-link" data-screen="dashboard">04 · Aluno · Dashboard</button>
+      <button class="flow-link" data-screen="task-start">05 · Task · Iniciar</button>
+      <button class="flow-link" data-screen="task-progress">06 · Task · Andamento</button>
+      <button class="flow-link" data-screen="task-done">07 · Task · Concluída</button>
+      <button class="flow-link" data-screen="prof-alunos" disabled>08 · Prof · Alunos</button>
+    </nav>
+  </header>
+
+  <main class="app-shell">
+    <!-- LOGIN -->
+    <section class="screen is-visible" id="screen-login">
+      <div class="login-card">
+        <div class="login-showcase">
+          <div>
+            <h1>TRACKER</h1>
+            <p>Plataforma de gestão de<br>tarefas para professores e alunos.</p>
+          </div>
+
+          <div class="feature-boxes">
+            <article class="feature-box">
+              <div class="feature-icon">📋</div>
+              <div>
+                <strong>Acompanhamento em tempo real</strong>
+                <span>Veja o progresso de cada aluno</span>
+              </div>
+            </article>
+
+            <article class="feature-box">
+              <div class="feature-icon">⏱️</div>
+              <div>
+                <strong>Registro de horas</strong>
+                <span>Controle automático por tarefa</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="login-form-wrapper">
+          <div class="section-header">
+            <h2>Bem-vindo de volta</h2>
+            <p>Faça login para continuar</p>
+          </div>
+
+          <form id="loginForm" class="login-form">
+            <label>
+              <span>Login</span>
+              <input type="email" id="email" value="fulano@escola.com" required />
+            </label>
+
+            <label>
+              <span>Senha</span>
+              <input type="password" id="password" value="12345678" required />
+            </label>
+
+            <button type="button" class="link-button forgot-button">Esqueci a senha</button>
+
+            <button type="submit" class="primary-btn full">Entrar</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="screen" id="screen-dashboard">
+      <div class="subbar">
+        <div class="brand large">TRACKER</div>
+
+        <div class="subnav">
+          <button class="tab-btn is-active" data-view="cards">Meus Cards</button>
+          <button class="tab-btn" data-view="history">Histórico</button>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-main">
+          <section class="hours-panel card">
+            <div class="section-header compact">
+              <h3>Horas trabalhadas</h3>
+              <p>Últimos 7 dias</p>
+            </div>
+
+            <div class="chart" id="weeklyChart" aria-label="Gráfico semanal"></div>
+          </section>
+
+          <section class="cards-header-row" id="cardsHeaderRow">
+            <div class="title-group">
+              <h3>Meus Cards</h3>
+              <span class="muted-pill" id="activeCount">2 ativos</span>
+            </div>
+          </section>
+
+          <section class="student-cards" id="studentCards"></section>
+
+          <section class="history-panel is-hidden" id="historyPanel">
+            <div class="cards-header-row">
+              <div class="title-group">
+                <h3>Histórico</h3>
+                <span class="muted-pill" id="historySummary">Registros recentes</span>
+              </div>
+            </div>
+            <div class="history-list" id="historyList"></div>
+          </section>
+        </div>
+
+        <aside class="dashboard-side">
+          <div class="metric-card card">
+            <strong id="weekHours">08h35</strong>
+            <span>Horas esta semana</span>
+          </div>
+
+          <div class="metric-card card">
+            <strong id="doneCount">4</strong>
+            <span>Tarefas concluídas</span>
+          </div>
+
+          <div class="metric-card card accent">
+            <strong id="progressCount">2</strong>
+            <span>Em andamento</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TASK START -->
+    <section class="screen task-screen" id="screen-task-start">
+      <div class="task-card card">
+        <div class="task-card-top">
+          <div class="task-title-wrap">
+            <span class="badge badge-dev">DEV</span>
+            <div>
+              <h2 id="taskStartTitle">Implementar autenticação de usuários</h2>
+              <p class="task-subtitle">Aguardando início · prazo <span id="taskStartDeadline">05 Abr 2026</span></p>
+            </div>
+          </div>
+
+          <div class="task-timer-block">
+            <strong id="startTimer">00h00</strong>
+            <button class="icon-close" data-screen="dashboard" aria-label="Fechar">×</button>
+          </div>
+        </div>
+
+        <div class="task-content-grid">
+          <div class="task-info-list">
+            <div class="info-block">
+              <span>Criado por</span>
+              <div class="info-value" id="taskStartAuthor">Fulano de Tal</div>
+            </div>
+
+            <div class="info-block">
+              <span>Prazo</span>
+              <div class="info-value" id="taskStartDateFull">05 de Abril, 2026</div>
+            </div>
+          </div>
+
+          <div class="log-box">
+            <span>Log de atividade</span>
+            <ul id="startLog"></ul>
+          </div>
+        </div>
+
+        <div class="task-actions">
+          <button class="success-btn" id="startTaskBtn">▶ Iniciar tarefa</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TASK PROGRESS -->
+    <section class="screen task-screen" id="screen-task-progress">
+      <div class="task-card card">
+        <div class="task-card-top">
+          <div class="task-title-wrap">
+            <span class="badge badge-dev">DEV</span>
+            <div>
+              <h2 id="taskProgressTitle">Implementar autenticação de usuários</h2>
+              <p class="task-subtitle success-text">Em execução agora</p>
+            </div>
+          </div>
+
+          <div class="task-timer-block">
+            <strong class="success-text" id="progressTimer">00h00</strong>
+            <button class="icon-close" data-screen="dashboard" aria-label="Fechar">×</button>
+          </div>
+        </div>
+
+        <div class="task-content-grid">
+          <div class="task-info-list">
+            <div class="info-block">
+              <span>Criado por</span>
+              <div class="info-value" id="taskProgressAuthor">Fulano de Tal</div>
+            </div>
+
+            <div class="info-block">
+              <span>Prazo</span>
+              <div class="info-value" id="taskProgressDateFull">05 de Abril, 2026</div>
+            </div>
+
+            <div class="info-block">
+              <span>Status</span>
+              <div class="status-box running">● Em execução</div>
+            </div>
+          </div>
+
+          <div class="log-box">
+            <span>Log de atividade</span>
+            <ul id="progressLog"></ul>
+          </div>
+        </div>
+
+        <div class="task-actions dual">
+          <button class="secondary-btn" id="pauseTaskBtn">❚❚ Pausar</button>
+          <button class="primary-btn" id="finishTaskBtn">✓ Finalizar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TASK DONE -->
+    <section class="screen task-screen" id="screen-task-done">
+      <div class="task-card card">
+        <div class="task-card-top">
+          <div class="task-title-wrap">
+            <span class="badge badge-dev">DEV</span>
+            <div>
+              <h2 id="taskDoneTitle">Implementar autenticação de usuários</h2>
+              <p class="task-subtitle">Concluída em <span id="taskDoneDate">31 mar 2026</span></p>
+            </div>
+          </div>
+
+          <div class="task-timer-block">
+            <strong class="warning-text" id="doneTimer">00h00</strong>
+            <button class="icon-close" data-screen="dashboard" aria-label="Fechar">×</button>
+          </div>
+        </div>
+
+        <div class="task-content-grid">
+          <div class="task-info-list">
+            <div class="info-block">
+              <span>Criado por</span>
+              <div class="info-value" id="taskDoneAuthor">Fulano de Tal</div>
+            </div>
+
+            <div class="info-block">
+              <span>Prazo original</span>
+              <div class="info-value" id="taskDoneDateFull">05 de Abril, 2026</div>
+            </div>
+
+            <div class="info-block">
+              <span>Status</span>
+              <div class="status-box done">✓ Concluída — <span id="doneStatusHours">00h00</span> no total</div>
+            </div>
+          </div>
+
+          <div class="log-box">
+            <span>Log de atividade</span>
+            <ul id="doneLog"></ul>
+          </div>
+        </div>
+
+        <div class="task-actions">
+          <button class="warning-btn" id="reportBtn">📋 Ver relatório</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section class="screen task-screen" id="screen-report">
+      <div class="task-card card">
+        <div class="task-card-top">
+          <div class="task-title-wrap">
+            <span class="badge badge-dev">RELATÓRIO</span>
+            <div>
+              <h2 id="reportTitle">Resumo da tarefa</h2>
+              <p class="task-subtitle">Visão detalhada da atividade</p>
+            </div>
+          </div>
+
+          <div class="task-timer-block">
+            <strong id="reportClock">00h00</strong>
+            <button class="icon-close" data-screen="dashboard" aria-label="Fechar">×</button>
+          </div>
+        </div>
+
+        <div class="task-content-grid">
+          <div class="task-info-list">
+            <div class="info-block">
+              <span>Tarefa</span>
+              <div class="info-value" id="reportTaskTitle">—</div>
+            </div>
+
+            <div class="info-block">
+              <span>Horas totais</span>
+              <div class="info-value" id="reportTaskHours">00h00</div>
+            </div>
+
+            <div class="info-block">
+              <span>Status final</span>
+              <div class="info-value" id="reportTaskStatus">—</div>
+            </div>
+          </div>
+
+          <div class="log-box">
+            <span>Atividade registrada</span>
+            <ul id="reportLog"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="floating-label" id="screenLabel">Tela 01 / 08</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
